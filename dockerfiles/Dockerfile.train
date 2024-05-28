@@ -1,0 +1,27 @@
+#make sure you mount the local data volume
+
+
+# Use an official PyTorch runtime as a parent image
+FROM pytorch/pytorch:2.3.0-cuda12.1-cudnn8-runtime
+
+# Set the working directory in the container to /app
+WORKDIR /app
+
+# Copy the entire src directory into the container at /app/src
+COPY src/ src/
+
+# Copy requirements.txt from the current directory into the container at /app
+COPY requirements.txt .
+
+
+# Install PyTorch with the specified version (from requirements.txt)
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Run train_model.py when the container launches
+CMD ["python", "src/model/train.py"]
+
+
+
+# Install tree command
+#RUN apt-get update && apt-get install -y tree
+#ENTRYPOINT ["tree", "-L", "3", "."]

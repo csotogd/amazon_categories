@@ -1,0 +1,16 @@
+docker build -t my_training_image -f dockerfiles/Dockerfile.train .
+
+docker run -v "$(pwd)/data:/data" my_training_image
+
+
+#docker build -t my_inference_image -f Dockerfile.inference .
+
+
+
+
+
+
+
+#docker run -v data:/app/data my_training_image
+
+

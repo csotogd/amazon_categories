@@ -1,0 +1,27 @@
+# Use an official PyTorch runtime as a parent image
+FROM pytorch/pytorch:1.10.0-cuda11.3-cudnn8-runtime
+
+# Set the working directory in the container to /app
+WORKDIR /app
+
+# Copy the entire src directory into the container at /app/src
+COPY src/ src/
+
+# Copy requirements.txt from the current directory into the container at /app
+COPY requirements.txt .
+
+COPY trained_model.pth .
+
+# Install PyTorch with the specified version (from requirements.txt)
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose port 80 for FastAPI app
+EXPOSE 80
+
+# Run FastAPI app when the container launches
+CMD ["uvicorn", "src.api.inference_api:app", "--host", "0.0.0.0", "--port", "80"]
+
+
+#docker build -t my_fastapi_image .
+#docker run -d -p 80:80 my_fastapi_image
+
